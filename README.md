@@ -2,8 +2,6 @@
 
 > Unique temporary id generator for python
 
----
-
 ## Usage
 
 ### Getting it
@@ -44,16 +42,12 @@ This allows for an easy count of the live objects and creates ids that are limit
 # import the generator class
 from utempid import UtempidGenerator
 
-class TestObject(object):
-    """docstring for TestObject"""
+class TemporaryObject(object):
+
     gen = UtempidGenerator()
 
     def __init__(self):
-        super(TestObject, self).__init__()
         self.id = self.gen.get_id()
-
-    def get_id(self):
-        return self.id
 
     @classmethod
     def count(cls):
@@ -64,30 +58,20 @@ class TestObject(object):
 
 
 def main():
-    a = TestObject()
-    b = TestObject()
-    c = TestObject()
-    d = TestObject()
+    a = TemporaryObject() # a.id = 0
+    b = TemporaryObject() # b.id = 1
+    c = TemporaryObject() # c.id = 2
 
-    print(a.get_id()) # 0
-    print(b.get_id()) # 1
-    print(c.get_id()) # 2
-    print(d.get_id()) # 3
+    print("count: ", TemporaryObject.count()) # 3
+    del a # return id 0
+    print("count: ", TemporaryObject.count()) # 2
 
-    print("count: ", TestObject.count()) # 4
-    del a
-    print("count: ", TestObject.count()) # 3
+    d = TemporaryObject() # d.id = 0
 
-    e = TestObject()
-
-    print(e.get_id()) # 0
-
-    print("count: ", TestObject.count()) # 4
-    b = 1
-    print("count: ", TestObject.count()) # 3
+    print("count: ", TemporaryObject.count()) # 3
+    b = 1 # return id 1
+    print("count: ", TemporaryObject.count()) # 2
 ```
-
----
 
 License
 ----
